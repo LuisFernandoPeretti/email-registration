@@ -20,12 +20,12 @@ app.post("/registers", async (req, res) => {
         const { cpf } = req.body;
         const { birth_date } = req.body;
 
-                const newRegister = await pool.query(
+        const newRegister = await pool.query(
             "INSERT INTO register ( email, name, surname, cpf, birth_date ) VALUES ($1, $2, $3, $4, $5) RETURNING *",
             [email, name, surname, cpf, birth_date]
         );
 
-        res.json(newRegister.row[0]);
+        res.json(newRegister.rows[0]);
     } catch (err) {
         console.error(err.message);
     }
@@ -67,13 +67,25 @@ app.put("/registers/:email", async (req, res) => {
         //console.log(name);
         const updateRegister = await pool.query("UPDATE register SET name = $1 WHERE email = $2", [name, email]);
 
-        res.json("ATUALIZADO");
+        res.json("updated!");
     } catch (err) {
         console.error(err.message);
     }
 })
 
 //delete a register
+
+app.delete("/registers/:email", async (req, res) => {
+    try {
+        const { email } = req.params;
+        
+        const deleteRegister = await pool.query("DELETE FROM register WHERE email = $1", [email]);
+
+        res.json("deleted!");
+    } catch (err) {
+        console.error(err.message);
+    }
+})
 
 app.listen(5000, () => {
     console.log("Server has startes on port 5000");
