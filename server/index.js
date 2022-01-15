@@ -33,7 +33,28 @@ app.post("/registers", async (req, res) => {
 
 //get all register
 
+app.get("/registers", async (req, res) => {
+    try {
+        const allRegisters = await pool.query("SELECT * FROM register")
+        res.json(allRegisters.rows);
+    } catch (err) {
+        console.log(err.message);
+    }
+})
+
 //get a register
+
+app.get("/registers/:email", async (req, res) => {
+    try {
+        const { email } = req.params;
+        //console.log(email);
+        const register = await pool.query("SELECT * FROM register WHERE email = $1", [email]);
+
+        res.json(register.rows);
+    } catch (err) {
+        console.error(err.message);
+    }
+})
 
 //delete a register
 
