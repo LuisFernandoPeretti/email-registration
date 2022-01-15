@@ -16,9 +16,12 @@ app.post("/registers", async (req, res) => {
     try {
         const { email } = req.body;
         const { name } = req.body;
+        const { surname } = req.body;
+        const { cpf } = req.body;
+        const { birth_date } = req.body;
         const newRegister = await pool.query(
-            "INSERT INTO register (email, name) VALUES ($1, $2) RETURNING *",
-            [email, name]
+            "INSERT INTO register ( email, name, surname, cpf, birth_date ) VALUES ($1, $2, $3, $4, $5) RETURNING *",
+            [email, name, surname, cpf, birth_date]
         );
 
         res.json(newRegister.row[0]);
