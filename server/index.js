@@ -62,10 +62,13 @@ app.put("/registers/:email", async (req, res) => {
     try {
         const { email } = req.params;
         const { name } = req.body;
+        const { surname } = req.body;
+        const { cpf } = req.body;
+        const { birth_date } = req.body;
 
         //console.log(email);
         //console.log(name);
-        const updateRegister = await pool.query("UPDATE register SET name = $1 WHERE email = $2", [name, email]);
+        const updateRegister = await pool.query("UPDATE register SET name = $1, surname = $2, cpf = $3, birth_date = $4 WHERE email = $5", [name, surname, cpf, birth_date, email]);
 
         res.json("updated!");
     } catch (err) {
