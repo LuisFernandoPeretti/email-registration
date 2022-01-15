@@ -12,6 +12,21 @@ app.use(express.json());
 
 //create a register
 
+app.post("/registers", async (req, res) => {
+    try {
+        const { email } = req.body;
+        const { name } = req.body;
+        const newRegister = await pool.query(
+            "INSERT INTO register (email, name) VALUES ($1, $2) RETURNING *",
+            [email, name]
+        );
+
+        res.json(newRegister.row[0]);
+    } catch (err) {
+        console.error(err.message);
+    }
+})
+
 //get all register
 
 //get a register

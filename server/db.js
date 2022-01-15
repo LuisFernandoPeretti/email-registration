@@ -5,7 +5,7 @@ const pool = new Pool({
     password: "Info@1234",
     host: "localhost",
     port: 5432,
-    database: "pgRegister"
+    database: "pgregister"
 });
 
 module.exports = pool;
