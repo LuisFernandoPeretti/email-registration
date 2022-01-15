@@ -6,6 +6,6 @@ CREATE TABLE register(
     surname VARCHAR(255) NOT NULL,
     cpf BIGINT NOT NULL,
     birth_date DATE NOT NULL,
-    creation_date TIMESTAMP(6),
-    update_date TIMESTAMP(6)
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
