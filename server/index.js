@@ -56,6 +56,23 @@ app.get("/registers/:email", async (req, res) => {
     }
 })
 
+//update a register
+
+app.put("/registers/:email", async (req, res) => {
+    try {
+        const { email } = req.params;
+        const { name } = req.body;
+
+        //console.log(email);
+        //console.log(name);
+        const updateRegister = await pool.query("UPDATE register SET name = $1 WHERE email = $2", [name, email]);
+
+        res.json("ATUALIZADO");
+    } catch (err) {
+        console.error(err.message);
+    }
+})
+
 //delete a register
 
 app.listen(5000, () => {
