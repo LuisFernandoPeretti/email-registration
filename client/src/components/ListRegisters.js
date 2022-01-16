@@ -4,6 +4,20 @@ const ListRegisters = () => {
 
     const [registers, setRegisters] = useState([]);
 
+    //delete register function
+    const deleteRegister = async (id) => {
+        try {
+            const deleteRegister = await fetch(`http://localhost:5000/registers/${id}`, {
+                method: "DELETE"
+            });
+            
+            //console.log(deleteRegister);
+            setRegisters(registers.filter(register => register.email !== id));
+        } catch (err) {
+            console.error(err.message);
+        }
+    }
+
     const getRegisters = async () => {
         try {
 
@@ -41,10 +55,12 @@ const ListRegisters = () => {
                     <td>@mdo</td>
                 </tr> */}
                 {registers.map(register => (
-                    <tr>
+                    <tr key={register.email}>
                         <td>{register.email}</td>
                         <td>Editar</td>
-                        <td>Deletar</td>
+                        <td>
+                            <button className="btn btn-danger" onClick={() => deleteRegister(register.email)}>Deletar</button>
+                        </td>
                     </tr>
                 ))}
             </tbody>
