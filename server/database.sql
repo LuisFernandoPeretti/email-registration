@@ -6,6 +6,18 @@ CREATE TABLE register(
     surname VARCHAR(255) NOT NULL,
     cpf BIGINT NOT NULL,
     birth_date DATE NOT NULL,
-    creation_date TIMESTAMP(6),
-    update_date TIMESTAMP(6)
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
+
+CREATE OR REPLACE FUNCTION update_changetimestamp_column()
+RETURNS TRIGGER AS $$
+BEGIN
+   NEW.updated_at = now(); 
+   RETURN NEW;
+END;
+$$ language 'plpgsql';
+
+CREATE TRIGGER update_register_changetimestamp BEFORE UPDATE
+    ON register FOR EACH ROW EXECUTE PROCEDURE 
+    update_changetimestamp_column();
