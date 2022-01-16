@@ -1,5 +1,7 @@
 import React, { Fragment, useEffect, useState } from "react";
 
+import EditRegister from "./EditRegister";
+
 const ListRegisters = () => {
 
     const [registers, setRegisters] = useState([]);
@@ -57,7 +59,9 @@ const ListRegisters = () => {
                 {registers.map(register => (
                     <tr key={register.email}>
                         <td>{register.email}</td>
-                        <td>Editar</td>
+                        <td>
+                            <EditRegister register={register}/>
+                        </td>
                         <td>
                             <button className="btn btn-danger" onClick={() => deleteRegister(register.email)}>Deletar</button>
                         </td>
