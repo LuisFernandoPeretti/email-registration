@@ -10,6 +10,8 @@ app.use(express.json());
 
 //routes
 
+
+
 //create a register
 
 app.post("/registers", async (req, res) => {
